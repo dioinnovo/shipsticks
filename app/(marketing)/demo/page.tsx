@@ -2,85 +2,85 @@
 
 import { useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Upload, FileText, TrendingUp, Download, CheckCircle, Camera, DollarSign, Clock, ArrowRight, Brain, Zap, Shield, Eye, FileCheck, AlertCircle, Users, Home, Building2, FileImage, X, AlertTriangle, Banknote, UserCheck, Heart } from 'lucide-react'
-import { ARTHUR_CASES, ARTHUR_STATISTICS, formatCurrency } from '@/lib/data/arthur-cases'
+import { Upload, FileText, TrendingUp, Download, CheckCircle, Camera, DollarSign, Clock, ArrowRight, Brain, Zap, Shield, Eye, FileCheck, AlertCircle, Users, Home, Building2, FileImage, X, AlertTriangle, Banknote, UserCheck, Heart, Plane, PackageCheck } from 'lucide-react'
+import { SHIPMENT_CASES, SHIPSTICKS_STATISTICS, formatCurrency } from '@/lib/data/shipment-cases'
 import Link from 'next/link'
 import Image from 'next/image'
 
 export default function DemoPage() {
-  const [activeTab, setActiveTab] = useState('claims-intelligence')
+  const [activeTab, setActiveTab] = useState('shipment-intelligence')
   const [isProcessing, setIsProcessing] = useState(false)
   const [selectedImage, setSelectedImage] = useState<number | null>(null)
   const [confidenceScore, setConfidenceScore] = useState<number>(0)
-  const [uploadedFiles, setUploadedFiles] = useState<Array<{id: number, name: string, type: string, status: string}>>([])  
-  const [selectedClaim, setSelectedClaim] = useState<string>('complex-diabetes')
+  const [uploadedFiles, setUploadedFiles] = useState<Array<{id: number, name: string, type: string, status: string}>>([])
+  const [selectedClaim, setSelectedClaim] = useState<string>('masters-tournament')
   const [analysisPhase, setAnalysisPhase] = useState<number>(0) // 0: none, 1: classification, 2: damage assessment, 3: settlement
   const [showClaimForm, setShowClaimForm] = useState(false)
   const [submittedClaim, setSubmittedClaim] = useState<any>(null)
   const [formData, setFormData] = useState({
-    insuredName: '',
-    insuredEmail: '',
-    insuredPhone: '',
-    propertyAddress: '',
-    policyNumber: '',
-    damageDescription: ''
+    golferName: '',
+    golferEmail: '',
+    golferPhone: '',
+    originAddress: '',
+    destinationCourse: '',
+    equipmentDescription: ''
   })
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  // Get real Arthur Health cases for demo
-  const arthurDiabetes = ARTHUR_CASES.find(c => c.id === 'complex-diabetes')!
-  const arthurCHF = ARTHUR_CASES.find(c => c.id === 'chf-management')!
+  // Get real Ship Sticks shipment cases for demo
+  const mastersTournament = SHIPMENT_CASES.find(c => c.id === 'masters-tournament')!
+  const pebbleBeachVacation = SHIPMENT_CASES.find(c => c.id === 'pebble-beach-vacation')!
 
-  const claimTypes = {
-    'complex-diabetes': {
-      icon: Users,
-      title: `${arthurDiabetes.patientProfile} - ${arthurDiabetes.careType}`,
-      claimNumber: 'CC-2024-DM001',
-      date: new Date(arthurDiabetes.condition.startDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
-      damages: [
-        { type: `Uncontrolled Blood Sugar`, severity: 'High', confidence: 94 },
-        { type: 'Medication Non-Adherence', severity: 'Critical', confidence: 97 },
-        { type: 'Multiple ER Visits', severity: 'High', confidence: 91 },
-        { type: 'Specialist Care Gaps', severity: 'Moderate', confidence: 88 },
-        { type: 'Poor Health Literacy', severity: 'High', confidence: 85 },
+  const shipmentTypes = {
+    'masters-tournament': {
+      icon: PackageCheck,
+      title: `${mastersTournament.golferProfile} - ${mastersTournament.shipmentType}`,
+      trackingNumber: 'SS-2024-M001',
+      date: new Date(mastersTournament.equipment.startDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
+      deliveryFeatures: [
+        { type: `White-Glove Tournament Service`, priority: 'Premium', confidence: 99 },
+        { type: 'Climate-Controlled Transport', priority: 'Critical', confidence: 98 },
+        { type: 'GPS Real-Time Tracking', priority: 'High', confidence: 97 },
+        { type: 'Tournament Official Coordination', priority: 'High', confidence: 96 },
+        { type: 'Signature Delivery Required', priority: 'Critical', confidence: 99 },
       ],
-      estimate: formatCurrency(arthurDiabetes.outcomes.baselineCost),
-      finalSettlement: formatCurrency(arthurDiabetes.outcomes.optimizedCost),
-      sccResult: `${arthurDiabetes.outcomes.savingsPercentage}% cost reduction`,
-      location: `${arthurDiabetes.location.city}, ${arthurDiabetes.location.state}`,
+      estimate: formatCurrency(mastersTournament.outcomes.standardCost),
+      finalCost: formatCurrency(mastersTournament.outcomes.optimizedCost),
+      aiResult: `${mastersTournament.outcomes.savingsPercentage}% cost savings + early delivery`,
+      route: `${mastersTournament.location.origin} → ${mastersTournament.location.destination}`,
       images: [
-        { id: 1, name: 'patient_assessment_01.jpg', status: 'pending' },
-        { id: 2, name: 'medication_review_02.jpg', status: 'pending' },
-        { id: 3, name: 'care_plan_03.jpg', status: 'pending' },
-        { id: 4, name: 'followup_visit_04.jpg', status: 'pending' },
+        { id: 1, name: 'tour_bag_photo_01.jpg', status: 'pending' },
+        { id: 2, name: 'equipment_closeup_02.jpg', status: 'pending' },
+        { id: 3, name: 'travel_case_03.jpg', status: 'pending' },
+        { id: 4, name: 'club_inventory_04.jpg', status: 'pending' },
       ]
     },
-    'chf-management': {
-      icon: Heart,
-      title: `${arthurCHF.patientProfile} - ${arthurCHF.careType}`,
-      claimNumber: 'CC-2024-CHF001',
-      date: new Date(arthurCHF.condition.startDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
-      damages: [
-        { type: `Frequent Hospital Readmissions`, severity: 'Critical', confidence: 95 },
-        { type: 'Medication Optimization Needed', severity: 'High', confidence: 98 },
-        { type: 'Remote Monitoring Gap', severity: 'High', confidence: 92 },
-        { type: 'Care Team Coordination', severity: 'Moderate', confidence: 89 },
-        { type: 'Patient Education Needed', severity: 'High', confidence: 94 },
+    'pebble-beach-vacation': {
+      icon: Plane,
+      title: `${pebbleBeachVacation.golferProfile} - ${pebbleBeachVacation.shipmentType}`,
+      trackingNumber: 'SS-2024-PB001',
+      date: new Date(pebbleBeachVacation.equipment.startDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
+      deliveryFeatures: [
+        { type: `Same-Day Express Delivery`, priority: 'Express', confidence: 97 },
+        { type: 'Multi-Package Coordination', priority: 'High', confidence: 95 },
+        { type: 'Pro Shop Direct Delivery`, priority: 'Standard', confidence: 98 },
+        { type: 'Complimentary Club Cleaning', priority: 'Premium', confidence: 96 },
+        { type: 'Resort Concierge Service`, priority: 'High', confidence: 94 },
       ],
-      estimate: formatCurrency(arthurCHF.outcomes.baselineCost),
-      finalSettlement: formatCurrency(arthurCHF.outcomes.optimizedCost),
-      sccResult: `${arthurCHF.outcomes.savingsPercentage}% cost reduction`,
-      location: `${arthurCHF.location.city}, ${arthurCHF.location.state}`,
+      estimate: formatCurrency(pebbleBeachVacation.outcomes.standardCost),
+      finalCost: formatCurrency(pebbleBeachVacation.outcomes.optimizedCost),
+      aiResult: `${pebbleBeachVacation.outcomes.savingsPercentage}% cost savings + same-day`,
+      route: `${pebbleBeachVacation.location.origin} → ${pebbleBeachVacation.location.destination}`,
       images: [
-        { id: 1, name: 'remote_monitoring_01.jpg', status: 'pending' },
-        { id: 2, name: 'care_team_meeting_02.jpg', status: 'pending' },
-        { id: 3, name: 'medication_adjustment_03.jpg', status: 'pending' },
-        { id: 4, name: 'wellness_check_04.jpg', status: 'pending' },
+        { id: 1, name: 'golf_bag_inspection_01.jpg', status: 'pending' },
+        { id: 2, name: 'push_cart_photo_02.jpg', status: 'pending' },
+        { id: 3, name: 'shoes_accessories_03.jpg', status: 'pending' },
+        { id: 4, name: 'packing_verification_04.jpg', status: 'pending' },
       ]
     }
   }
 
-  const currentClaim = claimTypes[selectedClaim as keyof typeof claimTypes] || claimTypes['complex-diabetes']
+  const currentClaim = shipmentTypes[selectedClaim as keyof typeof shipmentTypes] || shipmentTypes['masters-tournament']
 
   const processImages = async () => {
     setIsProcessing(true)
