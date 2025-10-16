@@ -59,22 +59,22 @@ const config: Config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // Arthur Health Brand Colors - Healthcare Focus
+        // Ship Sticks Brand Colors - Golf & Travel Focus
         arthur: {
           // Primary Brand Colors (Main CTAs, Headers, Key Elements)
-          blue: "#0066CC", // Arthur Health Primary Blue
-          "blue-hover": "#0052A3", // Darker Blue for hover states
-          "blue-light": "#00A3FF", // Secondary Light Blue
-          "blue-lighter": "#E6F2FF", // Light Blue Background
+          blue: "#5fd063", // Ship Sticks Primary Green (keeping 'blue' for compatibility)
+          "blue-hover": "#4fab55", // Darker Green for hover states
+          "blue-light": "#7FE083", // Secondary Light Green
+          "blue-lighter": "#E6F9E7", // Light Green Background
 
           // UI Foundation Colors (Primary Usage)
-          "ui-primary": "#0066CC", // Primary Blue - main buttons, headers
+          "ui-primary": "#5fd063", // Primary Green - main buttons, headers
           gray: "#707070", // Professional Gray - secondary actions
-          "gray-dark": "#2B2B2B", // Dark Gray Text
+          "gray-dark": "#231f20", // Ship Sticks Navy Text
           "gray-light": "#F5F5F5", // Light Gray Background
 
-          // Gray Scale (Healthcare Professional)
-          "gray-900": "#1A1A1A",
+          // Gray Scale (Professional Golf Brand)
+          "gray-900": "#231f20", // Ship Sticks Navy
           "gray-800": "#2B2B2B",
           "gray-700": "#404040",
           "gray-600": "#525252",
@@ -85,25 +85,25 @@ const config: Config = {
           "gray-100": "#F5F5F5",
           "gray-50": "#F9FAFB",
 
-          // Semantic Colors (Healthcare Context)
-          success: "#00A651", // Green for positive outcomes
-          warning: "#F59E0B", // Amber for care alerts
-          error: "#DC2626", // Red for critical alerts
-          info: "#0066CC", // Blue for information
-          care: "#4CAF50", // Green for care quality
-          risk: "#FF9800" // Orange for risk indicators
+          // Semantic Colors (Shipping/Travel Context)
+          success: "#5fd063", // Green for successful deliveries
+          warning: "#F59E0B", // Amber for shipping alerts
+          error: "#DC2626", // Red for delivery issues
+          info: "#5fd063", // Green for information
+          care: "#4fab55", // Accent green for quality service
+          risk: "#FF9800" // Orange for priority indicators
         },
         // Legacy SCC mapping for compatibility
         scc: {
-          red: "#0066CC", // Maps to Arthur blue
-          "red-hover": "#0052A3", // Maps to Arthur blue hover
+          red: "#5fd063", // Maps to Ship Sticks green
+          "red-hover": "#4fab55", // Maps to Ship Sticks green hover
           gray: "#707070",
-          "gray-dark": "#2B2B2B",
+          "gray-dark": "#231f20", // Ship Sticks Navy
           "gray-light": "#F5F5F5",
-          success: "#00A651",
+          success: "#5fd063",
           warning: "#F59E0B",
           error: "#DC2626",
-          info: "#0066CC"
+          info: "#5fd063"
         },
       },
       fontFamily: {

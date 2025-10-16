@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Arthur Health Intelligence Platform is a Next.js 15.5.2 application for AI-powered healthcare policy analysis and care coordination. It demonstrates how AI can help healthcare providers understand patient policies, identify coverage gaps, optimize treatment costs, and streamline care coordination through the Arthur AI Assistant.
+Ship Sticks Intelligence Platform is a Next.js 15.5.2 application for AI-powered golf equipment and luggage shipping logistics. It demonstrates how AI can help golfers optimize their travel experience, track shipments, manage bookings, and coordinate with partner golf courses and resorts worldwide through the Ship Sticks Travel Assistant.
 
 ## Development Commands
 
@@ -33,18 +33,18 @@ npm start
 - **AI Integration**: AI SDK (Vercel), ChromaDB for vectors
 - **PDF Generation**: @pdfme/generator
 - **Data Visualization**: Recharts
-- **Healthcare APIs**: Arthur Health CareNexus platform integration
+- **Shipping APIs**: FedEx, UPS, DHL integration via Ship Sticks platform
 
 ### Project Structure
 ```
-arthur-health/
+shipsticks/
 ├── app/                     # Next.js App Router
 │   ├── (auth)/             # Authentication routes
 │   ├── dashboard/          # Protected dashboard routes
-│   │   ├── assistant/      # Arthur AI Assistant interface
-│   │   ├── care-coordination/ # Care pathway management
-│   │   ├── compliance/     # HIPAA compliance monitoring
-│   │   ├── referrals/      # Provider referral management
+│   │   ├── assistant/      # Travel AI Assistant interface
+│   │   ├── care-sessions/  # Shipment tracking & management
+│   │   ├── compliance/     # Shipping compliance monitoring
+│   │   ├── referrals/      # Partner golf course network
 │   │   └── reports/        # Analytics and insights
 │   ├── api/                # API routes
 │   ├── demo/               # Interactive demo page
@@ -53,12 +53,12 @@ arthur-health/
 │   └── globals.css        # Global styles
 ├── components/
 │   ├── ui/                # shadcn/ui components
-│   ├── policy/            # Policy analysis components
+│   ├── policy/            # Shipping policy components
 │   ├── dashboard/         # Dashboard components
 │   └── layout/            # Layout components
 ├── lib/
 │   ├── ai/                # AI service integrations
-│   ├── arthur/            # Arthur Health API integration
+│   ├── arthur/            # Ship Sticks API integration
 │   ├── db/                # Database utilities
 │   ├── utils/             # Helper functions
 │   └── hooks/             # Custom React hooks
@@ -70,80 +70,82 @@ arthur-health/
 ### Key Features
 
 1. **Landing Page** (`app/page.tsx`)
-   - Hero section with Arthur Health value proposition
-   - Healthcare provider benefits showcase
-   - AI-powered policy analysis features
-   - CareNexus platform integration highlights
+   - Hero section with Ship Sticks value proposition
+   - Golfer and travel benefits showcase
+   - AI-powered shipping optimization
+   - Partner network highlights (3,500+ golf courses)
 
-2. **Policy Analysis Dashboard** (`app/dashboard/assistant/page.tsx`)
-   - Real-time policy interpretation
-   - Coverage gap identification
-   - Prior authorization automation
-   - Treatment cost optimization
+2. **Travel Assistant Dashboard** (`app/dashboard/assistant/page.tsx`)
+   - Real-time shipping quotes
+   - Golf course recommendations
+   - Travel planning assistance
+   - Shipment cost optimization
 
-3. **Care Coordination** (`app/dashboard/care-coordination/page.tsx`)
-   - Intelligent referral management
-   - Provider network optimization
-   - Care pathway tracking
+3. **Shipment Coordination** (`app/dashboard/care-sessions/page.tsx`)
+   - Intelligent shipment tracking
+   - Partner course network
+   - Delivery timeline management
    - Performance analytics
 
 4. **Interactive Demo** (`app/demo/page.tsx`)
-   - Policy upload and analysis wizard
-   - Simulated Arthur AI processing
-   - Real-time coverage insights
-   - Cost optimization recommendations
+   - Shipping quote calculator
+   - Simulated AI travel planning
+   - Real-time delivery tracking
+   - Cost savings calculator
 
 5. **AI Integration**
-   - Arthur AI Assistant for policy queries
-   - NLP for policy document analysis
-   - Predictive analytics for treatment outcomes
-   - Real-time provider network insights
+   - Travel Assistant for shipping queries
+   - NLP for travel planning
+   - Predictive analytics for delivery times
+   - Real-time golf course partner network insights
 
 ### Environment Variables
 
 Key environment variables in `.env.local`:
-- `ANTHROPIC_API_KEY` - Claude API access for Arthur AI
+- `ANTHROPIC_API_KEY` - Claude API access for Travel AI
 - `OPENAI_API_KEY` - OpenAI API for embeddings
-- `ARTHUR_API_ENDPOINT` - Arthur Health API endpoint
-- `ARTHUR_API_KEY` - Arthur Health API authentication
+- `SHIPSTICKS_API_ENDPOINT` - Ship Sticks API endpoint
+- `SHIPSTICKS_API_KEY` - Ship Sticks API authentication
+- `FEDEX_API_KEY` - FedEx shipping integration
+- `UPS_API_KEY` - UPS shipping integration
 - `NEXT_PUBLIC_DEMO_MODE` - Enable demo mode
 - `DATABASE_URL` - PostgreSQL connection string
 
 ### Design System
 
 - **Colors**:
-  - Primary: Arthur Health Blue (#0066CC)
-  - Secondary: Healthcare Green (#00A86B)
-  - Accent: Trust Purple (#6B46C1)
-- **Components**: Using shadcn/ui with healthcare-focused customizations
+  - Primary: Ship Sticks Green (#5fd063)
+  - Secondary: Accent Green (#4fab55)
+  - Dark: Navy (#231f20)
+- **Components**: Using shadcn/ui with golf/travel-focused customizations
 - **Animations**: Framer Motion for smooth, professional transitions
-- **Accessibility**: WCAG 2.1 AA compliant for healthcare requirements
+- **Accessibility**: WCAG 2.1 AA compliant
 
 ### Demo Mode
 
 The application includes a demo mode (`NEXT_PUBLIC_DEMO_MODE=true`) that:
-- Uses mock healthcare policy data
-- Simulates Arthur AI analysis
-- Shows sample provider networks
-- Demonstrates cost optimization scenarios
-- Highlights care coordination workflows
+- Uses mock shipping and customer data
+- Simulates Travel AI analysis
+- Shows sample golf course partner networks
+- Demonstrates shipping cost optimization
+- Highlights shipment tracking workflows
 
-### Healthcare Compliance
+### Security & Compliance
 
-- **HIPAA Compliance**: All PHI handling follows HIPAA guidelines
-- **Data Encryption**: End-to-end encryption for sensitive data
-- **Audit Logging**: Comprehensive audit trail for all actions
+- **PCI Compliance**: Payment data handling follows PCI-DSS standards
+- **Data Encryption**: End-to-end encryption for customer data
+- **Audit Logging**: Comprehensive audit trail for all transactions
 - **Access Control**: Role-based access control (RBAC)
 - **Security**: SOC 2 Type II compliance ready
 
 ### Next Steps
 
 To complete the full implementation:
-1. Integrate Arthur Health CareNexus API
-2. Implement HIPAA-compliant authentication
-3. Set up real-time policy analysis engine
-4. Add provider network data integration
-5. Implement prior authorization workflows
-6. Set up care coordination dashboards
-7. Add compliance monitoring tools
-8. Deploy on HIPAA-compliant infrastructure
+1. Integrate FedEx, UPS, DHL shipping APIs
+2. Implement secure payment gateway
+3. Set up real-time shipment tracking engine
+4. Add golf course partner network integration
+5. Implement automated booking workflows
+6. Set up shipment coordination dashboards
+7. Add shipping compliance monitoring tools
+8. Deploy on secure cloud infrastructure

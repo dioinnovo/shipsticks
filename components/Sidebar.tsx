@@ -48,28 +48,28 @@ export default function Sidebar({ isCollapsed = false, onToggle }: SidebarProps)
       description: 'Analytics & Insights'
     },
     {
-      title: 'Arthur',
+      title: 'Travel Assistant',
       icon: Brain,
       href: '/dashboard/assistant',
-      description: 'Clinical Assistant'
+      description: 'AI Travel Helper'
     },
     {
-      title: 'Patients',
+      title: 'Customers',
       icon: FileText,
       href: '/dashboard/claims',
-      description: 'Patient Hub & Claims'
+      description: 'Customer Orders'
     },
     {
-      title: 'Care Coordination',
+      title: 'Shipments',
       icon: CalendarDays,
       href: '/dashboard/care-sessions',
-      description: 'Patient Care Management'
+      description: 'Active Shipments'
     },
     {
-      title: 'Referrals',
+      title: 'Partners',
       icon: Users,
       href: '/dashboard/referrals',
-      description: 'Specialist Coordination'
+      description: 'Golf Course & Resort Network'
     }
   ]
 
@@ -86,8 +86,8 @@ export default function Sidebar({ isCollapsed = false, onToggle }: SidebarProps)
           <Link href="/dashboard" className="flex items-center gap-3">
             {isCollapsed ? (
               <Image
-                src={theme === 'dark' ? "/arthur-icon-white.png" : "/arthur-icon-blue.png"}
-                alt="Arthur Health"
+                src={theme === 'dark' ? "/shipsticks-icon-white.png" : "/shipsticks-icon-blue.png"}
+                alt="Ship Sticks"
                 width={32}
                 height={32}
                 className="object-contain"
@@ -96,8 +96,8 @@ export default function Sidebar({ isCollapsed = false, onToggle }: SidebarProps)
               />
             ) : (
               <Image
-                src={theme === 'dark' ? "/arthur-logo-white.png" : "/arthur-logo-blue.png"}
-                alt="Arthur Health"
+                src={theme === 'dark' ? "/shipsticks-logo-white.png" : "/shipsticks-logo-blue.png"}
+                alt="Ship Sticks"
                 width={246}
                 height={50}
                 className="object-contain"
@@ -134,7 +134,7 @@ export default function Sidebar({ isCollapsed = false, onToggle }: SidebarProps)
                   className={`
                     flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all
                     ${isActive
-                      ? 'bg-gray-100 dark:bg-gray-800 text-arthur-blue dark:text-arthur-blue border-l-4 border-arthur-blue pl-2'
+                      ? 'bg-gray-100 dark:bg-gray-800 text-green-600 dark:text-green-500 border-l-4 border-green-600 pl-2'
                       : 'hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100'
                     }
                   `}
@@ -179,9 +179,9 @@ export default function Sidebar({ isCollapsed = false, onToggle }: SidebarProps)
         {/* Company Info */}
         {!isCollapsed ? (
           <div className="text-xs text-gray-500 dark:text-gray-400">
-            <p className="font-semibold mb-1">Connecting Providers & Transforming Care</p>
-            <p>Empowering High-Value Coordinated Healthcare</p>
-            <p className="mt-2">© 2025 Arthur Health</p>
+            <p className="font-semibold mb-1">Making Golf Travel Simpler</p>
+            <p>Door-to-Door Golf Equipment & Luggage Shipping</p>
+            <p className="mt-2">© 2025 Ship Sticks</p>
           </div>
         ) : (
           <div className="text-center text-xs text-gray-500 dark:text-gray-400">

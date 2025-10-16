@@ -12,42 +12,42 @@ import Link from 'next/link'
 import { PageHeader } from '@/components/ui/page-header'
 import { CLINICAL_PATHWAYS } from '@/lib/constants/healthcare-terminology'
 
-interface CareSession {
+interface Shipment {
   id: string
-  patientName: string
-  mrn: string
-  sessionType: string
-  status: 'active' | 'scheduled' | 'completed' | 'monitoring'
-  startDate: string
+  customerName: string
+  trackingNumber: string
+  shipmentType: string
+  status: 'active' | 'scheduled' | 'completed' | 'in-transit'
+  shipDate: string
   nextMilestone: string
   progress: number
-  careManager: string
-  riskScore: string
+  coordinator: string
+  priority: string
   outcomes: {
-    adherence: number
-    qualityScore: number
+    onTimeDelivery: number
+    serviceScore: number
     costSavings: number
   }
-  voiceNote?: string
-  clinicalNotes?: string
-  vitalSigns?: {
-    bloodPressure?: string
-    heartRate?: number
+  customerNote?: string
+  handlingNotes?: string
+  packageDetails?: {
+    weight?: string
+    dimensions?: string
+    carrier?: string
+    insurance?: number
     temperature?: number
-    weight?: number
-    oxygenSaturation?: number
   }
-  medicationCount?: number
-  appointmentsScheduled?: number
+  itemCount?: number
+  deliveryWindowScheduled?: number
 }
 
-export default function CareSessionsPage() {
+export default function ShipmentsPage() {
   const router = useRouter()
   const [searchTerm, setSearchTerm] = useState('')
   const [filterStatus, setFilterStatus] = useState('all')
   const [filterPathway, setFilterPathway] = useState('all')
 
-  const activeSessions: CareSession[] = [
+  const activeShipments: Shipment[] = [
     {
       id: 'CS-001',
       patientName: 'Margaret Thompson',
@@ -183,13 +183,13 @@ export default function CareSessionsPage() {
     return Activity
   }
 
-  const filteredSessions = activeSessions.filter(session => {
+  const filteredShipments = activeShipments.filter(shipment => {
     const matchesSearch =
-      session.patientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      session.mrn.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      session.sessionType.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesStatus = filterStatus === 'all' || session.status === filterStatus
-    const matchesSession = filterPathway === 'all' || session.sessionType === filterPathway
+      shipment.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      shipment.trackingNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      shipment.shipmentType.toLowerCase().includes(searchTerm.toLowerCase())
+    const matchesStatus = filterStatus === 'all' || shipment.status === filterStatus
+    const matchesSession = filterPathway === 'all' || shipment.shipmentType === filterPathway
     return matchesSearch && matchesStatus && matchesSession
   })
 
@@ -197,14 +197,14 @@ export default function CareSessionsPage() {
     <div className="space-y-6">
       {/* Header */}
       <PageHeader
-        title="Care Coordination"
-        description="Active patient care sessions and visit workflows"
+        title="Shipment Management"
+        description="Active shipments and delivery tracking"
         action={
           <button
             className="h-12 px-6 bg-arthur-blue text-white rounded-full hover:bg-arthur-blue-dark flex items-center justify-center gap-2 w-full sm:w-auto transition-colors font-medium"
           >
             <Plus size={20} />
-            <span>New Care Session</span>
+            <span>New Shipment</span>
           </button>
         }
       />
@@ -216,7 +216,7 @@ export default function CareSessionsPage() {
             <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
             <input
               type="text"
-              placeholder="Search by patient name, MRN, or pathway type..."
+              placeholder="Search by customer name, tracking number, or shipment type..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-12 pr-4 py-3 bg-gray-50/50 dark:bg-gray-800/50 border border-gray-200/60 dark:border-gray-700/60 rounded-xl focus:outline-none focus:ring-2 focus:ring-arthur-blue/30 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
@@ -250,10 +250,10 @@ export default function CareSessionsPage() {
         </div>
       </div>
 
-      {/* Active Sessions Grid */}
+      {/* Active Shipments Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        {filteredSessions.map((session) => {
-          const Icon = getPathwayIcon(session.sessionType)
+        {filteredShipments.map((shipment) => {
+          const Icon = getPathwayIcon(shipment.shipmentType)
           return (
             <div
               key={session.id}
@@ -427,33 +427,33 @@ export default function CareSessionsPage() {
       <div className="bg-gradient-to-r from-arthur-blue to-blue-600 rounded-xl p-6 text-white">
         <div className="flex items-center gap-2 mb-4">
           <TrendingUp size={24} />
-          <h2 className="text-xl font-bold">Arthur AI Pathway Insights</h2>
+          <h2 className="text-xl font-bold">Travel AI Shipping Insights</h2>
         </div>
-image.png
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-white/10 backdrop-blur rounded-lg p-4">
-            <h3 className="font-semibold mb-2">Optimization Alert</h3>
-            <p className="text-sm opacity-90">3 patients could benefit from transitioning to lower-intensity pathways based on improvement metrics.</p>
+            <h3 className="font-semibold mb-2">Route Optimization</h3>
+            <p className="text-sm opacity-90">12 shipments could benefit from consolidated routing to save $2,400 in delivery costs this week.</p>
           </div>
 
           <div className="bg-white/10 backdrop-blur rounded-lg p-4">
-            <h3 className="font-semibold mb-2">Adherence Risk</h3>
-            <p className="text-sm opacity-90">5 patients showing declining engagement. Recommend proactive outreach within 48 hours.</p>
+            <h3 className="font-semibold mb-2">Weather Alert</h3>
+            <p className="text-sm opacity-90">3 shipments may experience delays due to forecasted weather. Proactive customer notifications recommended.</p>
           </div>
 
           <div className="bg-white/10 backdrop-blur rounded-lg p-4">
-            <h3 className="font-semibold mb-2">Cost Opportunity</h3>
-            <p className="text-sm opacity-90">Implementing home monitoring for 8 patients could save $125K annually.</p>
+            <h3 className="font-semibold mb-2">Partner Opportunity</h3>
+            <p className="text-sm opacity-90">5 new golf resorts requesting partnership. Projected $85K annual revenue opportunity.</p>
           </div>
         </div>
       </div>
 
       {/* Empty State */}
-      {filteredSessions.length === 0 && (
+      {filteredShipments.length === 0 && (
         <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 p-12 text-center">
           <AlertCircle className="text-gray-400 mx-auto mb-4" size={48} />
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">No pathways found</h3>
-          <p className="text-gray-600 dark:text-gray-400">Try adjusting your search criteria or create a new clinical pathway</p>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">No shipments found</h3>
+          <p className="text-gray-600 dark:text-gray-400">Try adjusting your search criteria or create a new shipment</p>
         </div>
       )}
     </div>
