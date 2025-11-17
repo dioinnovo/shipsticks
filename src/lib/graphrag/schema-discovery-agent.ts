@@ -83,18 +83,29 @@ export interface TableMetadata {
  */
 export class SchemaDiscoveryAgent {
   private llm: ChatOpenAI;
-  private parser: StructuredOutputParser<typeof SchemaDiscoveryResult>;
+  private parser;
 
   constructor() {
+    const azureEndpoint = process.env.AZURE_OPENAI_ENDPOINT;
+    const azureDeployment = process.env.AZURE_OPENAI_DEPLOYMENT || "gpt-4o";
+    const azureApiKey = process.env.AZURE_OPENAI_KEY;
+    const azureVersion = process.env.AZURE_OPENAI_VERSION || "2024-12-01-preview";
+
     this.llm = new ChatOpenAI({
       temperature: 0.3, // Slightly higher for creative pattern discovery
-      modelName: "gpt-4o",
-      azureOpenAIApiKey: process.env.AZURE_OPENAI_KEY,
-      azureOpenAIApiInstanceName: process.env.AZURE_OPENAI_INSTANCE_NAME || "arthur-health",
-      azureOpenAIApiDeploymentName: process.env.AZURE_OPENAI_DEPLOYMENT || "gpt-4o",
-      azureOpenAIApiVersion: process.env.AZURE_OPENAI_VERSION || "2024-12-01-preview",
+      model: azureDeployment,
+      configuration: {
+        baseURL: `${azureEndpoint}/openai/deployments/${azureDeployment}`,
+        defaultHeaders: {
+          "api-key": azureApiKey,
+        },
+        defaultQuery: {
+          "api-version": azureVersion,
+        },
+      },
     });
 
+    // @ts-ignore - Langchain StructuredOutputParser type constraint issue, but runtime is correct
     this.parser = StructuredOutputParser.fromZodSchema(SchemaDiscoveryResult);
   }
 

@@ -11,11 +11,11 @@ import { getPatientData } from '@/lib/ai/mock-patient-data'
 
 type TabType = 'overview' | 'claims' | 'history' | 'team' | 'documents'
 
-export default function PatientDetailPage({ params }: { params: { mrn: string } }) {
+export default function PatientDetailPage({ params }: { params: Promise<{ mrn: string }> }) {
   const [activeTab, setActiveTab] = useState<TabType>('overview')
 
   // Get patient data
-  const patient = getPatientData('Margaret Thompson') // In real app, would search by params.mrn
+  const patient = getPatientData('Margaret Thompson') // In real app, would search by mrn
 
   if (!patient) {
     return (

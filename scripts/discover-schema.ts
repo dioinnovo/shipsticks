@@ -11,8 +11,8 @@
  *   - neo4j-discovered-schema.cypher (Neo4j DDL)
  */
 
-import { synapseSchemaReader } from '../lib/graphrag/synapse-schema-reader';
-import { schemaDiscoveryAgent } from '../lib/graphrag/schema-discovery-agent';
+import { synapseSchemaReader } from '../src/lib/graphrag/synapse-schema-reader';
+import { schemaDiscoveryAgent } from '../src/lib/graphrag/schema-discovery-agent';
 import * as fs from 'fs';
 import * as path from 'path';
 

@@ -144,7 +144,7 @@ export const mockShipments: Record<string, ShipmentData> = {
     destinationCourse: "Bandon Dunes Golf Resort",
     destinationAddress: "57744 Round Lake Drive",
     destinationCity: "Bandon",
-    originState: "OR",
+    destinationState: "OR",
     destinationZip: "97411",
 
     carrier: "UPS",

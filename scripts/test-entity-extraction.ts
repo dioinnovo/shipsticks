@@ -10,9 +10,9 @@
  *   npx tsx scripts/test-entity-extraction.ts
  */
 
-import { neo4jClient } from '../lib/graphrag/neo4j-client';
-import { text2cypher } from '../lib/graphrag/text2cypher';
-import { gapDetector } from '../lib/graphrag/gap-detector';
+import { neo4jClient } from '../src/lib/graphrag/neo4j-client';
+import { text2cypher } from '../src/lib/graphrag/text2cypher';
+import { gapDetector } from '../src/lib/graphrag/gap-detector';
 
 async function testGraphRAGSystem() {
   console.log('🧪 Testing Arthur Health GraphRAG System\n');

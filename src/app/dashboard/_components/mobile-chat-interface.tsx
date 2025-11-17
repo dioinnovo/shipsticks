@@ -26,7 +26,7 @@ import {
 import SiriOrb from '@/components/ui/siri-orb'
 import SourcesSection from '@/components/ui/sources-section'
 import SimpleMarkdownMessage from '@/components/ui/simple-markdown-message'
-import { generateHealthcarePolicyPDF } from '@/lib/utils/healthcare-pdf-generator'
+import { generateSimplePolicyPDF } from '@/lib/utils/pdf-generator'
 import { mockShipments, getShipmentData } from '@/lib/ai/mock-shipment-data'
 import { SqlQueryDisplay } from './assistant/SqlQueryDisplay'
 import { ChartDisplay } from './assistant/ChartDisplay'
@@ -968,38 +968,24 @@ export default function MobileChatInterface() {
                       {message.downloadable && (
                         <button
                           onClick={() => {
-                            // Check if downloadContent is patient data object (has mrn property)
-                            if (message.downloadContent && typeof message.downloadContent === 'object' && 'mrn' in message.downloadContent) {
-                              // It's patient data - generate healthcare PDF
-                              generateHealthcarePolicyPDF(message.downloadContent)
+                            // Generate PDF from download content
+                            const contentForPDF = typeof message.downloadContent === 'string'
+                              ? message.downloadContent
+                              : JSON.stringify(message.downloadContent, null, 2)
+
+                            if (contentForPDF) {
+                              generateSimplePolicyPDF(contentForPDF, message.downloadFilename || `shipment-analysis-${Date.now()}.pdf`)
                             } else {
-                              // Try to extract the patient name from the message content
-                              const content = message.content.toLowerCase()
-                              let patientData = null
-
-                              // Check which patient this is for
-                              if (content.includes('margaret thompson')) {
-                                patientData = getPatientData('margaret thompson')
-                              } else if (content.includes('robert chen')) {
-                                patientData = getPatientData('robert chen')
-                              } else if (content.includes('emily rodriguez')) {
-                                patientData = getPatientData('emily rodriguez')
-                              }
-
-                              if (patientData) {
-                                generateHealthcarePolicyPDF(patientData)
-                              } else {
-                                // Fallback to text download if policy data not found
-                                const blob = new Blob([typeof message.downloadContent === 'string' ? message.downloadContent : JSON.stringify(message.downloadContent) || ''], { type: 'text/plain' })
-                                const url = URL.createObjectURL(blob)
-                                const a = document.createElement('a')
-                                a.href = url
-                                a.download = message.downloadFilename || 'policy_analysis.txt'
-                                document.body.appendChild(a)
-                                a.click()
-                                document.body.removeChild(a)
-                                URL.revokeObjectURL(url)
-                              }
+                              // Fallback to text download if no content
+                              const blob = new Blob([message.content || ''], { type: 'text/plain' })
+                              const url = URL.createObjectURL(blob)
+                              const a = document.createElement('a')
+                              a.href = url
+                              a.download = message.downloadFilename || 'shipment-analysis.txt'
+                              document.body.appendChild(a)
+                              a.click()
+                              document.body.removeChild(a)
+                              URL.revokeObjectURL(url)
                             }
                           }}
                           className="mt-3 flex items-center gap-2 px-4 py-2 bg-scc-red text-white rounded-lg hover:bg-scc-red-dark transition-colors text-sm font-medium"

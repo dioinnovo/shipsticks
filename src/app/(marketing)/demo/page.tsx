@@ -87,22 +87,19 @@ export default function DemoPage() {
     setAnalysisPhase(0)
     
     // If we have form data, submit to API
-    if (showClaimForm && formData.insuredName) {
+    if (showClaimForm && formData.golferName) {
       try {
         const response = await fetch('/api/claims/submit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             type: selectedClaim,
-            propertyAddress: formData.propertyAddress,
-            propertyType: selectedClaim === 'commercial' ? 'Commercial Building' : 'Commercial Property',
-            policyNumber: formData.policyNumber,
-            damageType: currentClaim.damages[0]?.type || 'Wind Damage',
-            damageDescription: formData.damageDescription,
-            severity: currentClaim.damages[0]?.severity || 'Moderate',
-            insuredName: formData.insuredName,
-            insuredEmail: formData.insuredEmail,
-            insuredPhone: formData.insuredPhone,
+            originAddress: formData.originAddress,
+            destinationCourse: formData.destinationCourse,
+            equipmentDescription: formData.equipmentDescription,
+            golferName: formData.golferName,
+            golferEmail: formData.golferEmail,
+            golferPhone: formData.golferPhone,
             images: uploadedFiles.map(f => ({
               url: `/uploads/${f.name}`,
               filename: f.name
@@ -578,7 +575,7 @@ export default function DemoPage() {
                         <currentClaim.icon className="text-blue-600" size={24} />
                         <div>
                           <p className="font-semibold text-blue-900">{currentClaim.title}</p>
-                          <p className="text-sm text-blue-700">Claim #{currentClaim.claimNumber} • {currentClaim.date}</p>
+                          <p className="text-sm text-blue-700">Tracking: {currentClaim.trackingNumber} • {currentClaim.date}</p>
                         </div>
                       </div>
                       <div className="text-right">
@@ -712,10 +709,10 @@ export default function DemoPage() {
                             </div>
                           </div>
 
-                          {/* Detected Damages */}
+                          {/* Delivery Features */}
                           <div className="space-y-3">
-                            <h4 className="font-semibold text-gray-700 dark:text-gray-300">Detected Damages:</h4>
-                            {currentClaim.damages.map((damage, index) => (
+                            <h4 className="font-semibold text-gray-700 dark:text-gray-300">Delivery Features:</h4>
+                            {currentClaim.deliveryFeatures.map((feature, index) => (
                               <motion.div
                                 key={index}
                                 initial={{ opacity: 0, x: -20 }}
@@ -725,19 +722,19 @@ export default function DemoPage() {
                               >
                                 <div className="flex justify-between items-start">
                                   <div>
-                                    <p className="font-medium text-gray-800 dark:text-gray-200">{damage.type}</p>
+                                    <p className="font-medium text-gray-800 dark:text-gray-200">{feature.type}</p>
                                     <p className={`text-sm ${
-                                      damage.severity === 'Major' ? 'text-red-600' :
-                                      damage.severity === 'Moderate' ? 'text-arthur-blue' :
-                                      damage.severity === 'Minor' ? 'text-yellow-600' :
-                                      damage.severity === 'Replace' ? 'text-purple-600' :
+                                      feature.priority === 'Critical' ? 'text-red-600' :
+                                      feature.priority === 'Premium' ? 'text-arthur-blue' :
+                                      feature.priority === 'High' ? 'text-yellow-600' :
+                                      feature.priority === 'Express' ? 'text-purple-600' :
                                       'text-blue-600'
                                     }`}>
-                                      {damage.severity}
+                                      {feature.priority}
                                     </p>
                                   </div>
                                   <span className="text-sm text-gray-500 dark:text-gray-400">
-                                    {damage.confidence}% confidence
+                                    {feature.confidence}% confidence
                                   </span>
                                 </div>
                               </motion.div>

@@ -6,7 +6,7 @@
  *   npx tsx scripts/benchmark-graphrag.ts
  */
 
-import { qualityTester, GroundTruthExample } from '../lib/graphrag/quality-tester';
+import { qualityTester, GroundTruthExample } from '../src/lib/graphrag/quality-tester';
 import * as fs from 'fs';
 import * as path from 'path';
 

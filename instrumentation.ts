@@ -11,7 +11,7 @@
  */
 export async function register() {
   if (process.env.NEXT_RUNTIME === 'nodejs') {
-    const { initializeSqlAgent } = await import('./lib/ai/sql-agent');
+    const { initializeSqlAgent } = await import('./src/lib/ai/sql-agent');
 
     try {
       console.log('🚀 Server starting - Initializing SQL Agent...');

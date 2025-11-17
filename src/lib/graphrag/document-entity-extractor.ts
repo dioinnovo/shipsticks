@@ -23,14 +23,14 @@ const ExtractedEntity = z.object({
     "Facility",
     "Procedure",
   ]).describe("Entity type"),
-  attributes: z.record(z.string()).describe("Additional attributes like MRN, ICD-10 codes, dosages"),
+  attributes: z.record(z.string(), z.string()).describe("Additional attributes like MRN, ICD-10 codes, dosages"),
 });
 
 const ExtractedRelationship = z.object({
   source: z.string().describe("Source entity name"),
   target: z.string().describe("Target entity name"),
   type: z.string().describe("Relationship type (e.g., HAS_DIAGNOSIS, PRESCRIBED)"),
-  attributes: z.record(z.string()).optional().describe("Relationship properties like dates, quantities"),
+  attributes: z.record(z.string(), z.string()).optional().describe("Relationship properties like dates, quantities"),
 });
 
 const ExtractedKnowledge = z.object({
@@ -45,18 +45,29 @@ const ExtractedKnowledge = z.object({
  */
 export class DocumentEntityExtractor {
   private llm: ChatOpenAI;
-  private parser: StructuredOutputParser<typeof ExtractedKnowledge>;
+  private parser;
 
   constructor() {
+    const azureEndpoint = process.env.AZURE_OPENAI_ENDPOINT;
+    const azureDeployment = process.env.AZURE_OPENAI_DEPLOYMENT || "gpt-4o";
+    const azureApiKey = process.env.AZURE_OPENAI_KEY;
+    const azureVersion = process.env.AZURE_OPENAI_VERSION || "2024-12-01-preview";
+
     this.llm = new ChatOpenAI({
       temperature: 0, // Deterministic for entity extraction
-      modelName: "gpt-4o",
-      azureOpenAIApiKey: process.env.AZURE_OPENAI_KEY,
-      azureOpenAIApiInstanceName: process.env.AZURE_OPENAI_INSTANCE_NAME || "arthur-health",
-      azureOpenAIApiDeploymentName: process.env.AZURE_OPENAI_DEPLOYMENT || "gpt-4o",
-      azureOpenAIApiVersion: process.env.AZURE_OPENAI_VERSION || "2024-12-01-preview",
+      model: azureDeployment,
+      configuration: {
+        baseURL: `${azureEndpoint}/openai/deployments/${azureDeployment}`,
+        defaultHeaders: {
+          "api-key": azureApiKey,
+        },
+        defaultQuery: {
+          "api-version": azureVersion,
+        },
+      },
     });
 
+    // @ts-ignore - Langchain StructuredOutputParser type constraint issue, but runtime is correct
     this.parser = StructuredOutputParser.fromZodSchema(ExtractedKnowledge);
   }
 

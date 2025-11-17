@@ -125,9 +125,9 @@ export default function SQLAnalyticsChat() {
       const data = await response.json()
 
       // Prepare chart data if applicable
-      let chartData = null
+      let chartData: any[] | undefined = undefined
       if (data.results && data.results.length > 0) {
-        chartData = prepareChartData(data.results)
+        chartData = prepareChartData(data.results) ?? undefined
       }
 
       const assistantMessage: Message = {

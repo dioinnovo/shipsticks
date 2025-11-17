@@ -29,10 +29,6 @@ const insightsLLM = new ChatOpenAI({
       "api-version": azureVersion || "2024-12-01-preview",
     },
   },
-  azureOpenAIApiKey: azureApiKey,
-  azureOpenAIApiInstanceName: azureEndpoint?.split('.')[0]?.split('//')[1] || "",
-  azureOpenAIApiDeploymentName: azureDeployment,
-  azureOpenAIApiVersion: azureVersion || "2024-12-01-preview",
 });
 
 /**

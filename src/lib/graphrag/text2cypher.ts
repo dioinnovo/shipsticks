@@ -131,13 +131,23 @@ export class HealthcareText2Cypher {
     }
 
     // Step 3: Initialize LLM (Azure OpenAI)
+    const azureEndpoint = process.env.AZURE_OPENAI_ENDPOINT;
+    const azureDeployment = process.env.AZURE_OPENAI_DEPLOYMENT || "gpt-4o";
+    const azureApiKey = process.env.AZURE_OPENAI_KEY;
+    const azureVersion = process.env.AZURE_OPENAI_VERSION || "2024-12-01-preview";
+
     this.llm = new ChatOpenAI({
       temperature: 0, // Use 0 for deterministic Cypher generation
-      modelName: "gpt-4o",
-      azureOpenAIApiKey: process.env.AZURE_OPENAI_KEY,
-      azureOpenAIApiInstanceName: process.env.AZURE_OPENAI_INSTANCE_NAME || "arthur-health",
-      azureOpenAIApiDeploymentName: process.env.AZURE_OPENAI_DEPLOYMENT || "gpt-4o",
-      azureOpenAIApiVersion: process.env.AZURE_OPENAI_VERSION || "2024-12-01-preview",
+      model: azureDeployment,
+      configuration: {
+        baseURL: `${azureEndpoint}/openai/deployments/${azureDeployment}`,
+        defaultHeaders: {
+          "api-key": azureApiKey,
+        },
+        defaultQuery: {
+          "api-version": azureVersion,
+        },
+      },
     });
 
     // Step 4: Create custom healthcare prompt template
@@ -152,18 +162,18 @@ export class HealthcareText2Cypher {
 
       // Result handling
       returnDirect: false, // Let LLM format the final answer in natural language
-      topK: 10, // Limit results to prevent overwhelming the LLM (Best Practice)
+      // Note: Result limiting handled via LIMIT clauses in Cypher queries
 
       // Debugging (only in development)
       returnIntermediateSteps: process.env.NODE_ENV === 'development', // Show generated Cypher
-      verbose: process.env.NODE_ENV === 'development', // Log execution steps
+      // Note: Verbose logging not supported in current LangChain API version
     });
 
     console.log("✅ Healthcare Text2Cypher initialized successfully");
     console.log("   - Schema: Loaded");
     console.log("   - LLM: Azure OpenAI GPT-4o");
-    console.log("   - Top K: 10 results");
-    console.log("   - Debug mode:", process.env.NODE_ENV === 'development' ? "ON" : "OFF");
+    console.log("   - Result limiting: Handled via Cypher LIMIT clauses");
+    console.log("   - Intermediate steps:", process.env.NODE_ENV === 'development' ? "Enabled" : "Disabled");
 
     return this.chain;
   }
@@ -320,7 +330,6 @@ export class HealthcareText2Cypher {
     schemaLoaded: boolean;
     schemaValid: boolean;
     llmConfigured: boolean;
-    topK: number;
   }> {
     const schemaValidation = await this.validateSchema();
 
@@ -329,7 +338,6 @@ export class HealthcareText2Cypher {
       schemaLoaded: schemaValidation.schema !== undefined && schemaValidation.schema.length > 0,
       schemaValid: schemaValidation.valid,
       llmConfigured: this.llm !== null,
-      topK: 10, // hardcoded in initialize()
     };
   }
 

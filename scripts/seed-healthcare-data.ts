@@ -10,7 +10,7 @@
 import { Client } from 'pg';
 import * as sqlite3 from 'sqlite3';
 import { open, Database } from 'sqlite';
-import { mockPatients } from '../lib/ai/mock-patient-data';
+import { mockPatients } from '../src/lib/ai/mock-patient-data';
 
 const DATABASE_URL = process.env.TEST_DATABASE_URL || 'file:./test-data/healthcare.db';
 const is_postgres = DATABASE_URL.startsWith('postgresql://');

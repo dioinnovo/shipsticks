@@ -4,6 +4,7 @@ export interface BrandConfig {
   colors: {
     primary: string
     secondary: string
+    accent: string
     success: string
   }
   ai: {
