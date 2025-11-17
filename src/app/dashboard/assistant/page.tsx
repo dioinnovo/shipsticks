@@ -1,6 +1,6 @@
 'use client'
 
-import MobileChatInterface from '@/components/mobile-chat-interface'
+import MobileChatInterface from '../_components/mobile-chat-interface'
 
 export default function AssistantPage() {
   return <MobileChatInterface />

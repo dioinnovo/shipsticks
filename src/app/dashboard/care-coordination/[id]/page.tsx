@@ -14,7 +14,7 @@ import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { SectionHeader } from '@/components/ui/section-header'
-import { CarePlanCard } from '@/components/care-coordination/care-plan-card'
+import { CarePlanCard } from '../../_components/care-coordination/care-plan-card'
 
 interface CareTeamMember {
   role: string

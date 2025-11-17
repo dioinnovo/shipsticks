@@ -5,7 +5,7 @@ import { MessageSquare, Mic, Phone, PhoneOff, X, Send, ArrowUp, Mail, Smartphone
 import SiriOrb from "@/components/ui/siri-orb"
 import { cn } from "@/lib/utils"
 import { useRealtimeVoice } from "@/hooks/useRealtimeVoice"
-import { VoiceDebugPanel } from "@/components/voice-debug-panel"
+import { VoiceDebugPanel } from "./voice-debug-panel"
 
 interface Message {
   text: string

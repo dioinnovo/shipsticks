@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Users, Plus, Search, Filter, TrendingUp, AlertCircle, Activity, BarChart3 } from 'lucide-react'
 import { PageHeader } from '@/components/ui/page-header'
-import PatientCard from '@/components/patient/PatientCard'
+import PatientCard from '../_components/patient/PatientCard'
 import { aggregatePatientData, getPatientStatistics, type Claim } from '@/lib/utils/patient-aggregation'
 
 export default function CustomersPage() {
